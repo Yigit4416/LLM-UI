@@ -8,10 +8,11 @@ export default function ChatInput() {
     const [loading, setLoading] = useState(false);
 
     function handleSubmit(event) {
+        console.log(message);
         event.preventDefault();
         if (message.trim() !== "") {
             setLoading(true);
-            axios.post("http://localhost:8080/api", {
+            axios.post("http://192.168.1.16:8080/api", {
                 prompt: message,
             })
             .then((response) => {
@@ -42,6 +43,7 @@ export default function ChatInput() {
                 placeholder="Type a message..."
                 className="border-2 border-gray-300 p-2 w-full rounded-lg"
                 />
+            <button type="submit" className="border-cyan-500">Submit</button>
             </form>
         </>
     );

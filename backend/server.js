@@ -1,11 +1,18 @@
 import axios from "axios";
 import express from "express";
+import cors from "cors";
 
 const app = express();
 const port = 8080;
 
 // STOP FROGETING THIS LINE
 app.use(express.json());
+
+app.use(cors());
+
+app.get("/", (req, res) => {
+    res.send("Hello World!");
+});
 
 app.post("/api", async (req, res) => {
     console.log(req.body);
@@ -31,6 +38,6 @@ app.post("/api", async (req, res) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+app.listen(8080, '0.0.0.0', () => {
+    console.log('Backend is accessible on 0.0.0.0:8080');
+  });

@@ -5,9 +5,7 @@ import cors from "cors";
 const app = express();
 const port = 8080;
 
-// STOP FROGETING THIS LINE
 app.use(express.json());
-
 app.use(cors());
 
 app.get("/", (req, res) => {
@@ -22,13 +20,11 @@ app.post("/api", async (req, res) => {
         prompt: req.body.prompt,
     })
     .then((response) => {
-        // Extract and process the response data
-        const rawData = response.data; // Assuming rawData is in string format
+        const rawData = response.data;
         const lines = rawData.trim().split('\n');
         const responses = lines.map(line => JSON.parse(line).response);
         const completeResponse = responses.join('');
         
-        // Send back the processed response
         res.send(completeResponse);
     })
     .catch((error) => {
@@ -37,7 +33,6 @@ app.post("/api", async (req, res) => {
     });
 });
 
-
-app.listen(8080, '0.0.0.0', () => {
-    console.log('Backend is accessible on 0.0.0.0:8080');
-  });
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Backend is accessible on 0.0.0.0:${port}`);
+});

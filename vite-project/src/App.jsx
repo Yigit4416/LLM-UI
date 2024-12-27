@@ -4,6 +4,7 @@ import ChatDisplay from "./components/ChatDisplay";
 
 export default function App() {
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   function getMessage(message) {
     setMessages((prevMessages) => [...prevMessages, message]);
@@ -12,8 +13,8 @@ export default function App() {
   return (
     <div>
       <h1 className="text-3xl font-bold text-center mt-8">Chat App</h1>
-      <ChatDisplay allMessages={messages} />
-      <ChatInput getMessage={getMessage} />
+      <ChatDisplay allMessages={messages} loading={loading} />
+      <ChatInput getMessage={getMessage} setLoading={setLoading} />
     </div>
   );
 }

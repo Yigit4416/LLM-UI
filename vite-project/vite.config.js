@@ -9,7 +9,7 @@ export default defineConfig({
     port: 5173,      // Specify the development server port
     proxy: {
       '/api': {
-        target: 'http://192.169.1.16:8080', // Backend URL
+        target: 'http://192.168.1.16:8080', // Backend URL
         changeOrigin: true,             // Ensure correct Host header is forwarded
         rewrite: (path) => path.replace(/^\/api/, ''), // Optional: Rewrite path
       },

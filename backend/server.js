@@ -12,6 +12,10 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 });
 
+app.get("/test", (req, res) => {
+    res.send("Backend is accessible");
+});
+
 app.post("/api", async (req, res) => {
     console.log(req.body);
 

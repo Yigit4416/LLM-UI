@@ -12,12 +12,12 @@ export default function App() {
     setMessages((prevMessages) => [...prevMessages, message]);
   }
 
-
+/*
   return (
     //<LoginPage/>
     <NewAccount/>
   )
-  /*
+  */
   return (
     <div>
     <h1 className="text-3xl font-bold text-center mt-8">Chat App</h1>
@@ -25,5 +25,5 @@ export default function App() {
     <ChatInput getMessage={getMessage} setLoading={setLoading} />
     </div>
   );
-  */
+  
 }

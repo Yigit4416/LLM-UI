@@ -20,7 +20,7 @@ app.post("/api", async (req, res) => {
     console.log(req.body);
 
     axios.post('http://localhost:11434/api/generate', {
-        model: 'llama3.2',
+        model: 'llama3',
         prompt: req.body.prompt,
     })
     .then((response) => {

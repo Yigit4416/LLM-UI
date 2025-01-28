@@ -1,5 +1,6 @@
 import mysql2 from 'mysql2';
 import dotenv from 'dotenv';
+import bcrypt from 'bcrypt';
 
 dotenv.config();
 
@@ -10,29 +11,45 @@ const pool = mysql2.createPool({
     database: process.env.DB_NAME,
 }).promise();
 
-export async function getUser(username) {
-    const [rows] = await pool.query('SELECT * FROM authentication WHERE name = ?', [username]);
-    return rows[0];
+export async function getUser(email, password) {
+    try {
+        const [rows] = await pool.query('SELECT * FROM authentication WHERE email = ?', [email]);
+        const isMatch = bcrypt.compare(password, rows[0].password);
+        return isMatch;
+    }
+    catch (error) {
+        return error.sqlMessage;
+    }
+}
+
+export async function getUserByEmail(email) {
+    try {
+        const [rows] = await pool.query('SELECT * FROM authentication WHERE email = ?', [email]);
+        return rows[0];
+    }
+    catch (error) {
+        return error.sqlMessage;
+    }
 }
 
 export async function createUser(username, password, email) {
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash(password, salt);
     try {
-        const [result] = await pool.query('INSERT INTO authentication (name, password, email) VALUES (?, ?, ?)', [username, password, email]);
+        const [result] = await pool.query('INSERT INTO authentication (name, password, email) VALUES (?, ?, ?)', [username, passwordHash, email]);
         return result;
-    } catch (error) {
-        if (error.code === 'ER_DUP_ENTRY') {
-            console.error('Duplicate entry for email:', email);
-            return 'Duplicate entry for email';
-        } else {
-            console.error(error.message);
-            return 'Error in creating user';
-        }
+    }
+    catch (error) {
+        return error.sqlMessage;
     }
 }
 
 export async function deleteUser(id) {
-    const [result] = await pool.query('DELETE FROM authentication WHERE id = ?', [id]);
-    return result;
+    try{
+        const [result] = await pool.query('DELETE FROM authentication WHERE id = ?', [id]);
+        return result;
+    }
+    catch (error) {
+        return error.sqlMessage;
+    }
 }
-
-console.log(await deleteUser(1));

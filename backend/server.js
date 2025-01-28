@@ -1,8 +1,9 @@
 import axios from "axios";
-import express from "express";
+import express, { response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { getUser, getUserByEmail, createUser, deleteUser } from "./auth.js";
+import { chat, chatDB } from "./chat.js";
 
 const app = express();
 const port = 8080;
@@ -12,14 +13,6 @@ app.use(cors());
 app.use(cookieParser());
 
 const SESSIONS = new Map();
-
-app.get("/", (req, res) => {
-    res.send("Hello World!");
-});
-
-app.get("/test", (req, res) => {
-    res.send("Backend is accessible");
-});
 
 app.post("/api", async (req, res) => {
     console.log(req.body);
@@ -102,7 +95,23 @@ app.delete("/delete/:id", async (req, res) => {
                 res.status(500).send("Error in fetching data");
             });
     }
-})
+});
+
+app.post("/newmessage", async (req, res) => {
+    const user = SESSIONS.get(req.cookies.sessionId);
+    let userId = await getUserByEmail(user);
+    userId = userId.id;
+    if (userId !== req.body.userID) {
+        return res.status(401).send("Unauthorized");
+    } else {
+        const newResponse = await chat(userId, req.body.prompt);
+        if (newResponse) {
+            return res.status(201).send(newResponse);
+        } else {
+            return res.status(500).send("Error in processing request");
+        }
+    }
+});
 
 app.listen(port, '0.0.0.0', () => {
     console.log(`Backend is accessible on 0.0.0.0:${port}`);

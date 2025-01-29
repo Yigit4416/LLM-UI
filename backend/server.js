@@ -97,14 +97,30 @@ app.delete("/delete/:id", async (req, res) => {
     }
 });
 
+// On frontend dont forget to get the chatID from the frontend and send it to the backend. 
+// It is in query object and name is insertId.
 app.post("/newmessage", async (req, res) => {
     const user = SESSIONS.get(req.cookies.sessionId);
-    let userId = await getUserByEmail(user);
-    userId = userId.id;
-    if (userId !== req.body.userID) {
+    let userAuth = await getUserByEmail(user);
+    if (userAuth === null) {
         return res.status(401).send("Unauthorized");
     } else {
-        const newResponse = await chat(userId, req.body.prompt);
+        const newResponse = await chat(userAuth.id, req.body.prompt);
+        if (newResponse) {
+            return res.status(201).send(newResponse);
+        } else {
+            return res.status(500).send("Error in processing request");
+        }
+    }
+});
+
+app.post("/savemessage", async (req, res) => {
+    const user = SESSIONS.get(req.cookies.sessionId);
+    let userAuth = await getUserByEmail(user);
+    if (userAuth === null) {
+        return res.status(401).send("Unauthorized");
+    } else {
+        const newResponse = await chatDB(req.body.chatID, userAuth.id, req.body.messageContent, req.body.mode);
         if (newResponse) {
             return res.status(201).send(newResponse);
         } else {

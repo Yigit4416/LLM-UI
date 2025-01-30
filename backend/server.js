@@ -20,20 +20,26 @@ app.post("/api", async (req, res) => {
     axios.post('http://localhost:11434/api/generate', {
         model: 'llama3',
         prompt: req.body.prompt,
+        "stream": false // Take care of this later
     })
     .then((response) => {
+        
+        // Maybe you can do this later: rather than doing this in here why don't you send raw data to client and trim it on client side.
+        // This way you can get rid of stream (maybe later you can figure out that too but for now lets stick with this)
+        /*
         const rawData = response.data;
         const lines = rawData.trim().split('\n');
         const responses = lines.map(line => JSON.parse(line).response);
         const completeResponse = responses.join('');
-        
-        res.send(completeResponse);
+        */
+        res.send(response.data.response);
     })
     .catch((error) => {
-        console.error(error.message);
+        console.error("Error:", error.message);
         res.status(500).send("Error in fetching data");
     });
 });
+
 
 app.post("/login", async (req, res) => {
     getUser(req.body.email, req.body.password)
@@ -43,7 +49,7 @@ app.post("/login", async (req, res) => {
                 SESSIONS.set(sessionId, req.body.email);
                 res
                 .cookie("sessionId", sessionId, {
-                    httpOnly: true, // client cannot access the cookie with js
+                    httpOnly: true, // client cannot access the cookie with js if this becomes true
                     secure: false, // because we are not using https
                     sameSite: "none",
                 })

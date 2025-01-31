@@ -14,7 +14,8 @@ export default function LoginPage() {
       .post("http://localhost:8080/login", {
         email: username,
         password: password,
-      })
+      },
+      { withCredentials: true })
       .then((response) => {
         console.log(response);
         navigate("/");

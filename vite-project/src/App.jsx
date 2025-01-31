@@ -3,10 +3,11 @@ import ChatInput from "./components/ChatInput";
 import ChatDisplay from "./components/ChatDisplay";
 import LoginPage from "./components/LoginPage";
 import NewAccount from "./components/NewAccount";
+import SideMenu from "./components/SideMenu";
 import { BrowserRouter, Routes, Route, /*Link, Outlet*/ } from 'react-router-dom';
 
 export default function App() {
-  
+
   return (
     <div>
       <BrowserRouter>
@@ -14,10 +15,12 @@ export default function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/new-account" element={<NewAccount />} />
+          <Route path="/side-menu" element={<SideMenu />} />
         </Routes>
       </BrowserRouter>
     </div>
   );
+      
   
 }
 

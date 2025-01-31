@@ -3,13 +3,18 @@ import express, { response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { getUser, getUserByEmail, createUser, deleteUser } from "./auth.js";
-import { chat, chatDB } from "./chat.js";
+import { chat, chatDB, chatHistory } from "./chat.js";
 
 const app = express();
 const port = 8080;
 
 app.use(express.json());
-app.use(cors());
+app.use(
+    cors({
+        origin: "http://localhost:5173", // Change this to your frontend URL
+        credentials: true,
+    })
+);
 app.use(cookieParser());
 
 const SESSIONS = new Map();
@@ -42,6 +47,7 @@ app.post("/api", async (req, res) => {
 
 
 app.post("/login", async (req, res) => {
+    
     getUser(req.body.email, req.body.password)
         .then((result) => {
             if (result) {
@@ -51,7 +57,7 @@ app.post("/login", async (req, res) => {
                 .cookie("sessionId", sessionId, {
                     httpOnly: true, // client cannot access the cookie with js if this becomes true
                     secure: false, // because we are not using https
-                    sameSite: "none",
+                    sameSite: "lax",
                 })
                 .send("Login successful");
                 console.log(SESSIONS);
@@ -129,6 +135,21 @@ app.post("/savemessage", async (req, res) => {
         const newResponse = await chatDB(req.body.chatID, userAuth.id, req.body.messageContent, req.body.mode);
         if (newResponse) {
             return res.status(201).send(newResponse);
+        } else {
+            return res.status(500).send("Error in processing request");
+        }
+    }
+});
+
+app.get("/chat-history", async (req, res) => {
+    const user = SESSIONS.get(req.cookies.sessionId);
+    let userAuth = await getUserByEmail(user);
+    if (userAuth === null) {
+        return res.status(401).send("Unauthorized");
+    } else {
+        const history = await chatHistory(parseInt(userAuth.id));
+        if (history) {
+            return res.status(200).send(history);
         } else {
             return res.status(500).send("Error in processing request");
         }

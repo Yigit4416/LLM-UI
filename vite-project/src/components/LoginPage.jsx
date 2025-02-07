@@ -52,14 +52,14 @@ export default function LoginPage() {
                         type="text"
                         placeholder="Email"
                         onChange={handleEmail}
-                        className="border-2 border-black rounded-lg m-1 p-2"/>
+                        className="border-2 border-black rounded-lg m-1 p-2 w-96"/>
                 </div>
                 <div>
                     <input 
                         type="text"
                         placeholder="Password" 
                         onChange={handlePassword} 
-                        className="border-2 border-black rounded-lg m-1 p-2"/>
+                        className="border-2 border-black rounded-lg m-1 p-2 w-96"/>
                 </div>
                 <div>
                     <button 

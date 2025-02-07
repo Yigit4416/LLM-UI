@@ -156,6 +156,15 @@ app.get("/chat-history", async (req, res) => {
     }
 });
 
+app.get("/is-logged-in", async (req, res) => {
+    const user = SESSIONS.get(req.cookies.sessionId);
+    if (user) {
+        res.send({ loggedIn: true });
+    } else {
+        res.send({ loggedIn: false });
+    }
+});
+
 app.listen(port, '0.0.0.0', () => {
     console.log(`Backend is accessible on 0.0.0.0:${port}`);
 });

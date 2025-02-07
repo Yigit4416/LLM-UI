@@ -49,7 +49,7 @@ export async function chatDB(chatID, userID, messageContent, mode) {
 
 export async function chatHistory(userID) {
     try {
-        const [result] = await pool.query("SELECT * FROM chat_headers WHERE userID = ?", [userID]);
+        const [result] = await pool.query("SELECT * FROM chat_headers WHERE userID = ? ORDER BY chatID DESC", [userID]);
         return result;
     } catch (error) {
         console.error(error.message);

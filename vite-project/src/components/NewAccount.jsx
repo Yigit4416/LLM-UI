@@ -1,10 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function NewAccount() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+
+  let navigate = useNavigate();
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -34,21 +37,27 @@ export default function NewAccount() {
     setEmail(event.target.value);
   }
 
+  function handleGoBack(event) {
+    event.preventDefault();
+    navigate("/login");
+  }
+
   return (
     <div className="text-center flex items-center justify-center min-h-screen">
       <div className="p-4 border-2 border-black rounded-lg">
         <form onSubmit={handleSubmit}>
           <div>
-            <input type="text" onChange={handleUsername} className="border-2 border-black rounded-lg m-1 p-2" placeholder="Username"/>
+            <input type="text" onChange={handleUsername} className="border-2 border-black rounded-lg m-1 p-2 w-96" placeholder="Username"/>
           </div>
           <div>
-            <input type="password" onChange={handlePassword} className="border-2 border-black rounded-lg m-1 p-2" placeholder="Password"/>
+            <input type="password" onChange={handlePassword} className="border-2 border-black rounded-lg m-1 p-2 w-96" placeholder="Password"/>
           </div>
           <div>
-            <input type="email" onChange={handleEmail} className="border-2 border-black rounded-lg m-1 p-2" placeholder="Email"/>
+            <input type="email" onChange={handleEmail} className="border-2 border-black rounded-lg m-1 p-2 w-96" placeholder="Email"/>
           </div>
           <div>
-            <button className="border-2 bg-yellow-300 border-blue-950 rounded-lg p-2 m-1">Create Account</button>
+            <button type="submit" className="border-2 bg-yellow-300 border-blue-950 rounded-lg p-2 m-1">Create Account</button>
+            <button type="button" onClick={handleGoBack} className="border-2 bg-yellow-300 border-blue-950 rounded-lg p-2 m-1">Go Back</button>
           </div>
         </form>
       </div>

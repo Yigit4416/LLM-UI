@@ -39,7 +39,7 @@ export default function NewAccount() {
 
   function handleGoBack(event) {
     event.preventDefault();
-    navigate("/login");
+    navigate("/");
   }
 
   return (

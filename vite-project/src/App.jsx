@@ -13,8 +13,8 @@ export default function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/chat" element={<MainPage />} />
           <Route path="/new-account" element={<NewAccount />} />
           <Route path="/side-menu" element={<SideMenu />} />
         </Routes>
@@ -32,11 +32,11 @@ const MainPage = () => {
     axios.get("http://localhost:8080/is-logged-in", { withCredentials: true })
       .then((response) => {
         response.data === "true" ? console.log("User is logged in") :
-        navigate("/");
+        navigate("/chat");
       })
       .catch((error) => {
         console.error(error);
-        navigate("/login");
+        navigate("/");
       });
   }, []);
   function getMessage(message) {

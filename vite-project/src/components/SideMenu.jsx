@@ -37,28 +37,30 @@ export default function SideMenu() {
     }, []);
 
     return (
-        <div className={`w-1/4 h-screen bg-gray-800 text-white shadow-lg flex flex-col ${menuCollapse ? 'hidden' : 'visible'}`}>
-          {/* Fixed Header */}
-          <div className="flex justify-between items-center p-4 border-b border-gray-700">
-            <h2 className="text-2xl font-semibold">Chat History</h2>
-            <button className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded">
-              Settings
-            </button>
-          </div>
-          
-          {/* Scrollable Content Area */}
-          <div className={`flex-1 p-4 overflow-hidden`}>
-            <ul className="h-full overflow-y-auto space-y-2 scrollbar-dark">
-              {messageList.map((message, index) => (
-                <li
-                  key={index}
-                  className="border-b border-gray-700 p-2 hover:bg-gray-700 rounded cursor-pointer"
-                >
-                  {message.header}
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className={`fixed top-0 left-0 w-1/4 h-screen bg-gray-800 text-white shadow-lg flex flex-col z-50 transition-transform duration-300 ${
+            menuCollapse ? '-translate-x-full' : 'translate-x-0'
+        }`}>
+            {/* Fixed Header */}
+            <div className="flex justify-between items-center p-4 border-b border-gray-700">
+                <h2 className="text-2xl font-semibold">Chat History</h2>
+                <button className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded">
+                    Settings
+                </button>
+            </div>
+              
+            {/* Scrollable Content Area */}
+            <div className="flex-1 p-4 overflow-hidden">
+                <ul className="h-full overflow-y-auto space-y-2 scrollbar-dark">
+                    {messageList.map((message, index) => (
+                        <li
+                            key={index}
+                            className="border-b border-gray-700 p-2 hover:bg-gray-700 rounded cursor-pointer"
+                        >
+                            {message.header}
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
-      );
+    );
 }

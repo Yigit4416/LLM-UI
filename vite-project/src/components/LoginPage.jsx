@@ -18,7 +18,7 @@ export default function LoginPage() {
       { withCredentials: true })
       .then((response) => {
         console.log(response);
-        navigate("/");
+        navigate("/chat");
       })
       .catch((response) => {
         console.error(response);

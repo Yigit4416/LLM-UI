@@ -31,21 +31,31 @@ const MainPage = () => {
   useEffect(() => {
     axios.get("http://localhost:8080/is-logged-in", { withCredentials: true })
       .then((response) => {
-        response.data === "true" ? console.log("User is logged in") :
-        navigate("/chat");
+        if (response.data.loggedIn === true) {
+          console.log("User is logged in");
+        }
+        else {
+          console.log("User is not logged in");
+          navigate("/");
+        }
       })
       .catch((error) => {
         console.error(error);
         navigate("/");
       });
-  }, []);
+  });
   function getMessage(message) {
-    setMessages((prevMessages) => [...prevMessages, message]);
+    if(message === null) {
+      setMessages([]);
+    }
+    else {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    }
   }
 
   return (
     <div className="flex">
-      <SideMenu />
+      <SideMenu getMessage={getMessage} />
       <div className="flex-1">
         <h1 className="text-3xl font-bold text-center mt-8">Chat App</h1>
         <ChatDisplay allMessages={messages} loading={loading} />

@@ -3,7 +3,7 @@ import express, { response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { getUser, getUserByEmail, createUser, deleteUser } from "./auth.js";
-import { chat, chatDB, chatHistory } from "./chat.js";
+import { chat, chatDB, chatHistory, oldChat } from "./chat.js";
 
 const app = express();
 const port = 8080;
@@ -144,10 +144,25 @@ app.post("/savemessage", async (req, res) => {
 app.get("/chat-history", async (req, res) => {
     const user = SESSIONS.get(req.cookies.sessionId);
     let userAuth = await getUserByEmail(user);
-    if (userAuth === null) {
+    if (userAuth === null || userAuth === undefined) {
         return res.status(401).send("Unauthorized");
     } else {
         const history = await chatHistory(parseInt(userAuth.id));
+        if (history) {
+            return res.status(200).send(history);
+        } else {
+            return res.status(500).send("Error in processing request");
+        }
+    }
+});
+
+app.get("/chat-history/:id", async (req, res) => {
+    const user = SESSIONS.get(req.cookies.sessionId);
+    let userAuth = await getUserByEmail(user);
+    if (userAuth === null || userAuth === undefined) {
+        return res.status(401).send("Unauthorized");
+    } else {
+        const history = await oldChat(parseInt(req.params.id));
         if (history) {
             return res.status(200).send(history);
         } else {

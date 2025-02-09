@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function SideMenu() {
+// eslint-disable-next-line react/prop-types
+export default function SideMenu({ getMessage }) {
     const [messageList, setMessageList] = useState([]);
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [menuCollapse, setMenuCollapse] = useState(false);
@@ -36,6 +37,32 @@ export default function SideMenu() {
         };
     }, []);
 
+    function newWindow(index/*, event*/) {
+        /*
+        const clickedElement = event.target;
+        
+        // Get element properties
+        console.log("Clicked element:", clickedElement);
+        console.log("Element text content:", clickedElement.textContent);
+        console.log("Element class list:", clickedElement.className);
+        */
+        const chatID = messageList[index].chatID
+        axios.get(`http://localhost:8080/chat-history/${chatID}`, { withCredentials: true })
+        .then((response) => {
+            //const chatList = [];
+            getMessage(null)
+            response.data.forEach(element => {
+                getMessage({
+                    sender: element.sender ? "Bot" : "User", 
+                    message: element.message_content
+                });
+            });
+        })
+        .catch((error) => {
+            console.error(error.message);
+        });
+    }
+
     return (
         <div className={`fixed top-0 left-0 w-1/4 h-screen bg-gray-800 text-white shadow-lg flex flex-col z-50 transition-transform duration-300 ${
             menuCollapse ? '-translate-x-full' : 'translate-x-0'
@@ -55,6 +82,7 @@ export default function SideMenu() {
                         <li
                             key={index}
                             className="border-b border-gray-700 p-2 hover:bg-gray-700 rounded cursor-pointer"
+                            onClick={() => newWindow(index)}
                         >
                             {message.header}
                         </li>

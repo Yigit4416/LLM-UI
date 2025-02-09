@@ -47,6 +47,15 @@ export async function chatDB(chatID, userID, messageContent, mode) {
     }
 }
 
+export async function oldChat(chatID) {
+    try {
+        const [result] = await pool.query("SELECT * FROM messages_table WHERE chatID = ? ORDER BY messageID DESC", [chatID]);
+        return result;
+    } catch (error) {
+        console.error(error.message);
+    }
+}
+
 export async function chatHistory(userID) {
     try {
         const [result] = await pool.query("SELECT * FROM chat_headers WHERE userID = ? ORDER BY chatID DESC", [userID]);

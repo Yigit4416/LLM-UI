@@ -9,8 +9,13 @@ const FormattedText = ({ text }) => (
 );
 
 // eslint-disable-next-line react/prop-types
-export default function ChatInput({ getMessage, setLoading }) {
+export default function ChatInput({ getMessage, setLoading, allMessages, setSendMessages }) {
   const [message, setMessage] = useState("");
+  const [isEmpty, setIsEmpty] = useState(false);
+
+  if(allMessages === null) {
+    setIsEmpty(true);
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -22,22 +27,42 @@ export default function ChatInput({ getMessage, setLoading }) {
       setMessage("");
       setLoading(true);
       
-      axios
-        .post("http://localhost:8080/api", {
-          prompt: message,
-        })
-        .then((response) => {
-          console.log(response.data);
-          getMessage({ 
-            sender: "Bot", 
-            message: <FormattedText text={response.data} />
+      if(isEmpty) {
+        axios
+          .post("http://localhost:8080/api", {
+            prompt: message,
+          })
+          .then((response) => {
+            console.log(response.data);
+            getMessage({ 
+              sender: "Bot", 
+              message: <FormattedText text={response.data} />
+            });
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error(error.message);
+            setLoading(false);
           });
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error(error.message);
-          setLoading(false);
-        });
+      } else {
+        setSendMessages(true);
+        axios
+          .post("http://localhost:8080/api", {
+            prompt: message,
+          })
+          .then((response) => {
+            console.log(response.data);
+            getMessage({ 
+              sender: "Bot", 
+              message: <FormattedText text={response.data} />
+            });
+            setLoading(false);
+          })
+          .catch((error) => {
+            console.error(error.message);
+            setLoading(false);
+          });
+      }
     }
   }
 

@@ -22,21 +22,13 @@ const SESSIONS = new Map();
 app.post("/api", async (req, res) => {
     console.log(req.body);
 
+    // For ollama
     axios.post('http://localhost:11434/api/generate', {
         model: 'llama3',
         prompt: req.body.prompt,
         "stream": false // Take care of this later
     })
     .then((response) => {
-        
-        // Maybe you can do this later: rather than doing this in here why don't you send raw data to client and trim it on client side.
-        // This way you can get rid of stream (maybe later you can figure out that too but for now lets stick with this)
-        /*
-        const rawData = response.data;
-        const lines = rawData.trim().split('\n');
-        const responses = lines.map(line => JSON.parse(line).response);
-        const completeResponse = responses.join('');
-        */
         res.send(response.data.response);
     })
     .catch((error) => {
@@ -44,7 +36,6 @@ app.post("/api", async (req, res) => {
         res.status(500).send("Error in fetching data");
     });
 });
-
 
 app.post("/login", async (req, res) => {
     
@@ -127,17 +118,55 @@ app.post("/newmessage", async (req, res) => {
 });
 
 app.post("/savemessage", async (req, res) => {
-    const user = SESSIONS.get(req.cookies.sessionId);
-    let userAuth = await getUserByEmail(user);
-    if (userAuth === null) {
-        return res.status(401).send("Unauthorized");
-    } else {
-        const newResponse = await chatDB(req.body.chatID, userAuth.id, req.body.messageContent, req.body.mode);
-        if (newResponse) {
-            return res.status(201).send(newResponse);
-        } else {
+    console.log('Request body:', req.body); // Debug log
+    try {
+        console.log('Request body:', req.body); // Debug log
+        // Check if session exists
+        console.log('Session ID:', req.cookies.sessionId);
+        const user = SESSIONS.get(req.cookies.sessionId);
+        if (!user) {
+            console.log('No session found:', req.cookies);
+            return res.status(401).send("No session found");
+        }
+
+        // Get user data
+        const userAuth = await getUserByEmail(user);
+        console.log('User auth data:', userAuth); // Debug log
+
+        if (!userAuth) {
+            return res.status(401).send("User not found");
+        }
+
+        if (!userAuth.id) {
+            return res.status(401).send("Invalid user data - missing ID");
+        }
+
+        // Validate required request body parameters
+        if (!req.body.chatIndex || !req.body.messageContent || !req.body.mode) {
+            console.log({
+                chatIndex: req.body.chatIndex,
+                messageContent: req.body.messageContent.props.text,
+                mode: req.body.mode
+            })
+            return res.status(400).send("Missing required parameters");
+        }
+
+        const newResponse = await chatDB(
+            req.body.chatIndex, 
+            parseInt(userAuth.id), 
+            req.body.messageContent.props.text, 
+            req.body.mode
+        );
+
+        if (!newResponse) {
             return res.status(500).send("Error in processing request");
         }
+
+        return res.status(201).send(newResponse);
+
+    } catch (error) {
+        console.error("Error in /savemessage:", error);
+        return res.status(500).send("Internal server error");
     }
 });
 

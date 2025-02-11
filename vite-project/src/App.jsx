@@ -26,6 +26,8 @@ export default function App() {
 const MainPage = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [chatIndex, setChatIndex] = useState();
+  const [sendMessages, setSendMessages] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,22 +46,57 @@ const MainPage = () => {
         navigate("/");
       });
   });
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      axios.post("http://localhost:8080/savemessage", 
+        {
+          chatIndex: chatIndex,
+          messageContent: messages[messages.length - 1].message,
+          mode: messages[messages.length - 1].sender === "User" ? "send" : "receive"
+        }, 
+        {
+          withCredentials: true
+        }
+      )
+      .then(response => {
+        console.log("Message saved successfully", response.data);
+      })
+      .catch(error => {
+        console.error("Error saving message", error);
+      });      
+    }
+    }, [messages, chatIndex, sendMessages]);
+
   function getMessage(message) {
     if(message === null) {
       setMessages([]);
     }
     else {
       setMessages((prevMessages) => [...prevMessages, message]);
+      console.log(message);
     }
   }
 
   return (
     <div className="flex">
-      <SideMenu getMessage={getMessage} />
+      <SideMenu
+        getMessage={getMessage}
+        setChatIndex={setChatIndex}
+      />
       <div className="flex-1">
         <h1 className="text-3xl font-bold text-center mt-8">Chat App</h1>
-        <ChatDisplay allMessages={messages} loading={loading} />
-        <ChatInput getMessage={getMessage} setLoading={setLoading} />
+        <ChatDisplay 
+          allMessages={messages}
+          loading={loading}
+        />
+        <ChatInput
+          chatIndex={chatIndex}
+          getMessage={getMessage}
+          setLoading={setLoading}
+          allMessages={messages}
+          setSendMessages={setSendMessages}
+        />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
-export default function SideMenu({ getMessage }) {
+export default function SideMenu({ getMessage, setChatIndex }) {
     const [messageList, setMessageList] = useState([]);
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [menuCollapse, setMenuCollapse] = useState(false);
@@ -37,23 +37,16 @@ export default function SideMenu({ getMessage }) {
         };
     }, []);
 
-    function newWindow(index/*, event*/) {
-        /*
-        const clickedElement = event.target;
-        
-        // Get element properties
-        console.log("Clicked element:", clickedElement);
-        console.log("Element text content:", clickedElement.textContent);
-        console.log("Element class list:", clickedElement.className);
-        */
+    function newWindow(index) {
         const chatID = messageList[index].chatID
+        setChatIndex(chatID);
         axios.get(`http://localhost:8080/chat-history/${chatID}`, { withCredentials: true })
         .then((response) => {
-            //const chatList = [];
             getMessage(null)
+            console.log(response.data)
             response.data.forEach(element => {
                 getMessage({
-                    sender: element.sender ? "Bot" : "User", 
+                    sender: element.is_ai_message ? "Bot" : "User", 
                     message: element.message_content
                 });
             });

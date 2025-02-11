@@ -49,7 +49,7 @@ export async function chatDB(chatID, userID, messageContent, mode) {
 
 export async function oldChat(chatID) {
     try {
-        const [result] = await pool.query("SELECT * FROM messages_table WHERE chatID = ? ORDER BY messageID DESC", [chatID]);
+        const [result] = await pool.query("SELECT * FROM messages_table WHERE chatID = ?", [chatID]);
         return result;
     } catch (error) {
         console.error(error.message);

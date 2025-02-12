@@ -1,0 +1,622 @@
+{
+    "type": "MySQLNotebook",
+    "version": "1.0",
+    "caption": "DB Notebook",
+    "content": "\\about\nuse llm_ui;\nselect * from messages_table;\nselect * from chat_headers;\n",
+    "options": {
+        "tabSize": 4,
+        "indentSize": 4,
+        "insertSpaces": true,
+        "defaultEOL": "LF",
+        "trimAutoWhitespace": true
+    },
+    "viewState": {
+        "cursorState": [
+            {
+                "inSelectionMode": false,
+                "selectionStart": {
+                    "lineNumber": 4,
+                    "column": 28
+                },
+                "position": {
+                    "lineNumber": 4,
+                    "column": 28
+                }
+            }
+        ],
+        "viewState": {
+            "scrollLeft": 0,
+            "firstPosition": {
+                "lineNumber": 2,
+                "column": 1
+            },
+            "firstPositionDeltaTop": -20
+        },
+        "contributionsState": {
+            "editor.contrib.folding": {},
+            "editor.contrib.wordHighlighter": false
+        }
+    },
+    "contexts": [
+        {
+            "state": {
+                "start": 1,
+                "end": 1,
+                "language": "mysql",
+                "result": {
+                    "type": "text",
+                    "text": [
+                        {
+                            "type": 2,
+                            "content": "Welcome to the MySQL Shell - DB Notebook.\n\nPress Ctrl+Enter to execute the code block.\n\nExecute \\sql to switch to SQL, \\js to JavaScript and \\ts to TypeScript mode.\nExecute \\help or \\? for help;",
+                            "language": "ansi"
+                        }
+                    ]
+                },
+                "currentHeight": 28,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 6
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        },
+        {
+            "state": {
+                "start": 2,
+                "end": 4,
+                "language": "mysql",
+                "result": {
+                    "type": "resultIds",
+                    "list": [
+                        "5f8b9b9c-9194-4405-e6b3-72988e63ae2f"
+                    ]
+                },
+                "currentHeight": 352,
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 11
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 11,
+                            "length": 30
+                        },
+                        "contentStart": 12,
+                        "state": 0
+                    },
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 41,
+                            "length": 28
+                        },
+                        "contentStart": 42,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": [
+                {
+                    "tabId": "1",
+                    "resultId": "5f8b9b9c-9194-4405-e6b3-72988e63ae2f",
+                    "rows": [
+                        {
+                            "0": 1,
+                            "1": 13,
+                            "2": 11,
+                            "3": "here is a new message",
+                            "4": 0,
+                            "5": "2025-01-29 16:03:10"
+                        },
+                        {
+                            "0": 2,
+                            "1": 13,
+                            "2": 11,
+                            "3": "here is a 2. new message",
+                            "4": 0,
+                            "5": "2025-01-29 16:05:02"
+                        },
+                        {
+                            "0": 3,
+                            "1": 13,
+                            "2": 11,
+                            "3": "here is a 2. new message",
+                            "4": 0,
+                            "5": "2025-02-10 12:19:02"
+                        },
+                        {
+                            "0": 4,
+                            "1": 13,
+                            "2": 11,
+                            "3": "here is a 2. new message",
+                            "4": 0,
+                            "5": "2025-02-10 19:50:54"
+                        },
+                        {
+                            "0": 5,
+                            "1": 13,
+                            "2": 11,
+                            "3": "hey man",
+                            "4": 0,
+                            "5": "2025-02-10 19:55:45"
+                        },
+                        {
+                            "0": 6,
+                            "1": 18,
+                            "2": 11,
+                            "3": "heyo",
+                            "4": 0,
+                            "5": "2025-02-10 20:00:35"
+                        },
+                        {
+                            "0": 7,
+                            "1": 13,
+                            "2": 11,
+                            "3": "hey man",
+                            "4": 0,
+                            "5": "2025-02-10 20:07:23"
+                        },
+                        {
+                            "0": 8,
+                            "1": 8,
+                            "2": 11,
+                            "3": "heyo",
+                            "4": 0,
+                            "5": "2025-02-11 11:46:16"
+                        },
+                        {
+                            "0": 9,
+                            "1": 17,
+                            "2": 11,
+                            "3": "hey man",
+                            "4": 0,
+                            "5": "2025-02-11 12:25:55"
+                        },
+                        {
+                            "0": 10,
+                            "1": 17,
+                            "2": 11,
+                            "3": "Hey! What's up?",
+                            "4": 1,
+                            "5": "2025-02-11 12:26:07"
+                        },
+                        {
+                            "0": 11,
+                            "1": 13,
+                            "2": 11,
+                            "3": "send a message",
+                            "4": 0,
+                            "5": "2025-02-11 14:11:16"
+                        },
+                        {
+                            "0": 12,
+                            "1": 13,
+                            "2": 11,
+                            "3": "What would you like me to send a message about? Would you like me to:\n\n* Send a message to someone else (provide the name and message)?\n* Generate a random message for fun?\n* Send a message in a specific tone or style (e.g. inspirational, funny, serious)?\n\nLet me know, and I'll do my best to create an interesting message!",
+                            "4": 1,
+                            "5": "2025-02-11 14:11:38"
+                        },
+                        {
+                            "0": 13,
+                            "1": 18,
+                            "2": 11,
+                            "3": "What would you like me to send a message about? Would you like me to:\n\n* Send a message to someone else (provide the name and message)?\n* Generate a random message for fun?\n* Send a message in a specific tone or style (e.g. inspirational, funny, serious)?\n\nLet me know, and I'll do my best to create an interesting message!",
+                            "4": 1,
+                            "5": "2025-02-11 14:12:35"
+                        },
+                        {
+                            "0": 14,
+                            "1": 13,
+                            "2": 11,
+                            "3": "what is up",
+                            "4": 0,
+                            "5": "2025-02-11 14:19:21"
+                        },
+                        {
+                            "0": 15,
+                            "1": 13,
+                            "2": 11,
+                            "3": "Not much! Just an AI hanging out and waiting for someone to chat with. How about you? What's new in your world?",
+                            "4": 1,
+                            "5": "2025-02-11 14:19:24"
+                        },
+                        {
+                            "0": 16,
+                            "1": 18,
+                            "2": 11,
+                            "3": "Not much! Just an AI hanging out and waiting for someone to chat with. How about you? What's new in your world?",
+                            "4": 1,
+                            "5": "2025-02-11 14:19:34"
+                        },
+                        {
+                            "0": 17,
+                            "1": 1,
+                            "2": 11,
+                            "3": "hey",
+                            "4": 0,
+                            "5": "2025-02-12 15:33:21"
+                        },
+                        {
+                            "0": 18,
+                            "1": 1,
+                            "2": 11,
+                            "3": "Hey! How's it going?",
+                            "4": 1,
+                            "5": "2025-02-12 15:33:43"
+                        },
+                        {
+                            "0": 19,
+                            "1": 1,
+                            "2": 11,
+                            "3": "hey",
+                            "4": 0,
+                            "5": "2025-02-12 15:33:59"
+                        },
+                        {
+                            "0": 20,
+                            "1": 1,
+                            "2": 11,
+                            "3": "Hey! How's it going?",
+                            "4": 1,
+                            "5": "2025-02-12 15:34:02"
+                        },
+                        {
+                            "0": 21,
+                            "1": 1,
+                            "2": 11,
+                            "3": "hey how are you",
+                            "4": 0,
+                            "5": "2025-02-12 17:19:26"
+                        },
+                        {
+                            "0": 22,
+                            "1": 1,
+                            "2": 11,
+                            "3": "I'm just an AI, I don't have feelings or emotions like humans do. However, I'm functioning properly and ready to help you with any questions or tasks you may have! How about you? How's your day going?",
+                            "4": 1,
+                            "5": "2025-02-12 17:19:44"
+                        },
+                        {
+                            "0": 23,
+                            "1": 1,
+                            "2": 11,
+                            "3": "I'm just an AI, I don't have feelings or emotions like humans do. However, I'm functioning properly and ready to help you with any questions or tasks you may have! How about you? How's your day going?",
+                            "4": 1,
+                            "5": "2025-02-12 17:21:59"
+                        },
+                        {
+                            "0": 24,
+                            "1": 19,
+                            "2": 11,
+                            "3": "how it is going",
+                            "4": 0,
+                            "5": "2025-02-12 17:23:41"
+                        },
+                        {
+                            "0": 25,
+                            "1": 19,
+                            "2": 11,
+                            "3": "I'm just an AI, I don't have feelings or experiences like humans do. I exist solely to provide information and assist with tasks, so I don't really have a \"going\" in the same way that a human might.\n\nBut I'm always happy to chat with you and help with any questions or topics you'd like to discuss!",
+                            "4": 1,
+                            "5": "2025-02-12 17:23:50"
+                        },
+                        {
+                            "0": 26,
+                            "1": 19,
+                            "2": 11,
+                            "3": "just write \"a\" pls",
+                            "4": 0,
+                            "5": "2025-02-12 17:24:42"
+                        },
+                        {
+                            "0": 27,
+                            "1": 19,
+                            "2": 11,
+                            "3": "A",
+                            "4": 1,
+                            "5": "2025-02-12 17:24:43"
+                        },
+                        {
+                            "0": 28,
+                            "1": 19,
+                            "2": 11,
+                            "3": "just say \"b\"",
+                            "4": 0,
+                            "5": "2025-02-12 17:37:56"
+                        },
+                        {
+                            "0": 29,
+                            "1": 19,
+                            "2": 11,
+                            "3": "B",
+                            "4": 1,
+                            "5": "2025-02-12 17:38:11"
+                        },
+                        {
+                            "0": 30,
+                            "1": 17,
+                            "2": 11,
+                            "3": "B",
+                            "4": 1,
+                            "5": "2025-02-12 17:38:41"
+                        },
+                        {
+                            "0": 31,
+                            "1": 19,
+                            "2": 11,
+                            "3": "just write \"c\" pls",
+                            "4": 0,
+                            "5": "2025-02-12 17:41:48"
+                        },
+                        {
+                            "0": 32,
+                            "1": 19,
+                            "2": 11,
+                            "3": "C",
+                            "4": 1,
+                            "5": "2025-02-12 17:41:49"
+                        },
+                        {
+                            "0": 33,
+                            "1": 17,
+                            "2": 11,
+                            "3": "C",
+                            "4": 1,
+                            "5": "2025-02-12 17:42:05"
+                        },
+                        {
+                            "0": 34,
+                            "1": 19,
+                            "2": 11,
+                            "3": "heyo",
+                            "4": 0,
+                            "5": "2025-02-12 17:49:19"
+                        },
+                        {
+                            "0": 35,
+                            "1": 19,
+                            "2": 11,
+                            "3": "Heyo! How's it going?",
+                            "4": 1,
+                            "5": "2025-02-12 17:49:32"
+                        },
+                        {
+                            "0": 36,
+                            "1": 19,
+                            "2": 11,
+                            "3": "give me a word example",
+                            "4": 0,
+                            "5": "2025-02-12 17:57:52"
+                        },
+                        {
+                            "0": 37,
+                            "1": 19,
+                            "2": 11,
+                            "3": "Here is a word:\n\n**FROG**\n\nWhat would you like to do with this word? Would you like me to give you an example sentence, ask you about the word's meaning, or generate a related word? Let me know!",
+                            "4": 1,
+                            "5": "2025-02-12 17:57:58"
+                        },
+                        {
+                            "0": 38,
+                            "1": 19,
+                            "2": 11,
+                            "3": "how are you",
+                            "4": 0,
+                            "5": "2025-02-12 17:59:06"
+                        },
+                        {
+                            "0": 39,
+                            "1": 19,
+                            "2": 11,
+                            "3": "I'm just a language model, I don't have feelings or emotions like humans do. However, I am functioning properly and ready to assist with any questions or tasks you may have. How can I help you today?",
+                            "4": 1,
+                            "5": "2025-02-12 17:59:11"
+                        },
+                        {
+                            "0": 40,
+                            "1": 19,
+                            "2": 11,
+                            "3": "hey tell me a joke",
+                            "4": 0,
+                            "5": "2025-02-12 18:01:29"
+                        },
+                        {
+                            "0": 41,
+                            "1": 19,
+                            "2": 11,
+                            "3": "Here's one:\n\nWhy couldn't the bicycle stand up by itself?\n\n(Wait for it...)\n\nBecause it was two-tired!\n\nHope that made you laugh! Do you want to hear another one?",
+                            "4": 1,
+                            "5": "2025-02-12 18:01:35"
+                        },
+                        {
+                            "0": 42,
+                            "1": 19,
+                            "2": 11,
+                            "3": "Here's one:\n\nWhy couldn't the bicycle stand up by itself?\n\n(Wait for it...)\n\nBecause it was two-tired!\n\nHope that made you laugh! Do you want to hear another one?",
+                            "4": 1,
+                            "5": "2025-02-12 18:02:08"
+                        },
+                        {
+                            "0": 43,
+                            "1": 19,
+                            "2": 11,
+                            "3": "i am sick of this thing",
+                            "4": 0,
+                            "5": "2025-02-12 18:02:30"
+                        },
+                        {
+                            "0": 44,
+                            "1": 19,
+                            "2": 11,
+                            "3": "I'm sorry to hear that you're feeling frustrated or fed up with something. Can you tell me more about what's got you feeling stuck or upset? Sometimes sharing your concerns can help clarify things and give us a sense of control. I'm here to listen and offer support if you need it!",
+                            "4": 1,
+                            "5": "2025-02-12 18:02:39"
+                        }
+                    ],
+                    "columns": [
+                        {
+                            "title": "messageID",
+                            "field": "0",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": true,
+                            "nullable": false,
+                            "autoIncrement": true
+                        },
+                        {
+                            "title": "chatID",
+                            "field": "1",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "userID",
+                            "field": "2",
+                            "dataType": {
+                                "type": 4,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "message_content",
+                            "field": "3",
+                            "dataType": {
+                                "type": 17,
+                                "characterMaximumLength": 65535,
+                                "flags": [
+                                    "BINARY",
+                                    "ASCII",
+                                    "UNICODE"
+                                ],
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false
+                        },
+                        {
+                            "title": "is_ai_message",
+                            "field": "4",
+                            "dataType": {
+                                "type": 42,
+                                "flags": [
+                                    "SIGNED",
+                                    "ZEROFILL"
+                                ],
+                                "numericPrecision": 10,
+                                "parameterFormatType": "OneOrZero",
+                                "synonyms": [
+                                    "INTEGER",
+                                    "INT4"
+                                ]
+                            },
+                            "inPK": false,
+                            "nullable": false,
+                            "autoIncrement": false,
+                            "default": "0"
+                        },
+                        {
+                            "title": "created_at",
+                            "field": "5",
+                            "dataType": {
+                                "type": 26,
+                                "dateTimePrecision": 8,
+                                "needsQuotes": true,
+                                "parameterFormatType": "OneOrZero"
+                            },
+                            "inPK": false,
+                            "nullable": true,
+                            "autoIncrement": false,
+                            "default": "CURRENT_TIMESTAMP"
+                        }
+                    ],
+                    "executionInfo": {
+                        "text": "OK, 44 records retrieved in 6.407ms"
+                    },
+                    "totalRowCount": 44,
+                    "hasMoreRows": false,
+                    "currentPage": 0,
+                    "index": 1,
+                    "sql": "\nselect * from messages_table",
+                    "updatable": true,
+                    "fullTableName": "messages_table"
+                }
+            ]
+        },
+        {
+            "state": {
+                "start": 5,
+                "end": 5,
+                "language": "mysql",
+                "currentSet": 1,
+                "statements": [
+                    {
+                        "delimiter": ";",
+                        "span": {
+                            "start": 0,
+                            "length": 0
+                        },
+                        "contentStart": 0,
+                        "state": 0
+                    }
+                ]
+            },
+            "data": []
+        }
+    ]
+}

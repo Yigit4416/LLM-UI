@@ -1,21 +1,22 @@
-import { useState } from "react";
+import PropTypes from 'prop-types';
+import { useState, useEffect } from "react";
 import axios from "axios";
 
-// eslint-disable-next-line react/prop-types
 const FormattedText = ({ text }) => (
   <pre className="whitespace-pre-wrap break-words font-sans m-0">
     {text}
   </pre>
 );
 
-// eslint-disable-next-line react/prop-types
-export default function ChatInput({ getMessage, setLoading, allMessages, setSendMessages }) {
+export default function ChatInput({ getMessage, setLoading, setSendMessages, chatIndex, setChatIndex, messageList }) {
   const [message, setMessage] = useState("");
   const [isEmpty, setIsEmpty] = useState(false);
 
-  if(allMessages === null) {
-    setIsEmpty(true);
-  }
+  useEffect(() => {
+    if(chatIndex === undefined) {
+      setIsEmpty(true);
+    }
+  }, [chatIndex]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -28,6 +29,7 @@ export default function ChatInput({ getMessage, setLoading, allMessages, setSend
       setLoading(true);
       
       if(isEmpty) {
+        // for message
         axios
           .post("http://localhost:8080/api", {
             prompt: message,
@@ -43,6 +45,18 @@ export default function ChatInput({ getMessage, setLoading, allMessages, setSend
           .catch((error) => {
             console.error(error.message);
             setLoading(false);
+          });
+          // for header
+          setChatIndex(messageList.length + 1);
+          axios.post("http://localhost:8080/newmessage", {
+            chatIndex: chatIndex,
+            messageContent: message,
+          }, { withCredentials: true })
+          .then((response) => {
+            console.log("Message saved successfully", response.data);
+          })
+          .catch((error) => {
+            console.error("Error saving message", error);
           });
       } else {
         setSendMessages(true);
@@ -93,3 +107,16 @@ export default function ChatInput({ getMessage, setLoading, allMessages, setSend
     </div>
   );
 }
+
+ChatInput.propTypes = {
+  getMessage: PropTypes.func.isRequired,
+  setLoading: PropTypes.func.isRequired,
+  messageList: PropTypes.array.isRequired,
+  setSendMessages: PropTypes.func.isRequired,
+  chatIndex: PropTypes.number,
+  setChatIndex: PropTypes.func.isRequired
+};
+
+FormattedText.propTypes = {
+  text: PropTypes.string.isRequired
+};

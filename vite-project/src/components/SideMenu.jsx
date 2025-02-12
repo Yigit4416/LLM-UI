@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import PropTypes from 'prop-types';
 
-// eslint-disable-next-line react/prop-types
-export default function SideMenu({ getMessage, setChatIndex }) {
-    const [messageList, setMessageList] = useState([]);
+export default function SideMenu({ getMessage, setChatIndex, messageList, setMessageList, setLookingOldChat }) {
     const [isInitialLoad, setIsInitialLoad] = useState(true);
     const [menuCollapse, setMenuCollapse] = useState(false);
 
@@ -18,7 +17,7 @@ export default function SideMenu({ getMessage, setChatIndex }) {
                     console.error(error.message);
                 });
         }
-    }, [isInitialLoad]);
+    }, [isInitialLoad, setMessageList]);
 
     useEffect(() => {
         const handleMouseMove = (event) => {
@@ -38,22 +37,23 @@ export default function SideMenu({ getMessage, setChatIndex }) {
     }, []);
 
     function newWindow(index) {
-        const chatID = messageList[index].chatID
+        setLookingOldChat(true);
+        const chatID = messageList[index].chatID;
         setChatIndex(chatID);
         axios.get(`http://localhost:8080/chat-history/${chatID}`, { withCredentials: true })
-        .then((response) => {
-            getMessage(null)
-            console.log(response.data)
-            response.data.forEach(element => {
-                getMessage({
-                    sender: element.is_ai_message ? "Bot" : "User", 
-                    message: element.message_content
+            .then((response) => {
+                getMessage(null);
+                console.log(response.data);
+                response.data.forEach(element => {
+                    getMessage({
+                        sender: element.is_ai_message ? "Bot" : "User",
+                        message: element.message_content
+                    });
                 });
+            })
+            .catch((error) => {
+                console.error(error.message);
             });
-        })
-        .catch((error) => {
-            console.error(error.message);
-        });
     }
 
     return (
@@ -67,9 +67,8 @@ export default function SideMenu({ getMessage, setChatIndex }) {
                     Settings
                 </button>
             </div>
-              
-            {/* Scrollable Content Area */}
-            <div className="flex-1 p-4 overflow-hidden">
+            {/* Main content with padding bottom to prevent overlap with new chat button */}
+            <div className="flex-1 p-4 pb-16 overflow-hidden">
                 <ul className="h-full overflow-y-auto space-y-2 scrollbar-dark">
                     {messageList.map((message, index) => (
                         <li
@@ -82,6 +81,34 @@ export default function SideMenu({ getMessage, setChatIndex }) {
                     ))}
                 </ul>
             </div>
+            {/* New Chat Button */}
+            <button 
+                onClick={() => {
+                    getMessage(null);
+                    setChatIndex(undefined);
+                    setIsInitialLoad(true);
+                }}
+                className="absolute bottom-0 left-0 w-full p-4 bg-blue-600 hover:bg-blue-700 text-white font-bold border-t border-gray-700"
+            >
+                New Chat
+            </button>
         </div>
     );
 }
+
+SideMenu.propTypes = {
+    // Function to handle message updates
+    getMessage: PropTypes.func.isRequired,
+    // Function to update chat index
+    setChatIndex: PropTypes.func.isRequired,
+    setLookingOldChat: PropTypes.func.isRequired,
+    // Array of message objects
+    messageList: PropTypes.arrayOf(
+        PropTypes.shape({
+            chatID: PropTypes.number.isRequired,
+            header: PropTypes.string.isRequired
+        })
+    ).isRequired,
+    // Function to update message list
+    setMessageList: PropTypes.func.isRequired
+};

@@ -24,6 +24,8 @@ export default function App() {
 }
 
 const MainPage = () => {
+  const [lookingOldChat, setLookingOldChat] = useState(false);
+  const [messageList, setMessageList] = useState([]);
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [chatIndex, setChatIndex] = useState();
@@ -48,16 +50,14 @@ const MainPage = () => {
   });
 
   useEffect(() => {
-    if (messages.length > 0) {
+    if (messages.length > 0 && !lookingOldChat) {
       axios.post("http://localhost:8080/savemessage", 
         {
           chatIndex: chatIndex,
           messageContent: messages[messages.length - 1].message,
           mode: messages[messages.length - 1].sender === "User" ? "send" : "receive"
         }, 
-        {
-          withCredentials: true
-        }
+        { withCredentials: true }
       )
       .then(response => {
         console.log("Message saved successfully", response.data);
@@ -66,7 +66,7 @@ const MainPage = () => {
         console.error("Error saving message", error);
       });      
     }
-    }, [messages, chatIndex, sendMessages]);
+    }, [messages, chatIndex, sendMessages, lookingOldChat]);
 
   function getMessage(message) {
     if(message === null) {
@@ -81,16 +81,22 @@ const MainPage = () => {
   return (
     <div className="flex">
       <SideMenu
+        lookingOldChat={lookingOldChat}
+        setLookingOldChat={setLookingOldChat}
+        messageList={messageList}
+        setMessageList={setMessageList}
         getMessage={getMessage}
         setChatIndex={setChatIndex}
-      />
+        />
       <div className="flex-1">
         <h1 className="text-3xl font-bold text-center mt-8">Chat App</h1>
         <ChatDisplay 
           allMessages={messages}
           loading={loading}
-        />
+          />
         <ChatInput
+          messageList={messageList}
+          setChatIndex={setChatIndex}
           chatIndex={chatIndex}
           getMessage={getMessage}
           setLoading={setLoading}

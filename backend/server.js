@@ -20,8 +20,6 @@ app.use(cookieParser());
 const SESSIONS = new Map();
 
 app.post("/api", async (req, res) => {
-    console.log(req.body);
-
     // For ollama
     axios.post('http://localhost:11434/api/generate', {
         model: 'llama3',
@@ -103,9 +101,10 @@ app.delete("/delete/:id", async (req, res) => {
 // On frontend dont forget to get the chatID from the frontend and send it to the backend. 
 // It is in query object and name is insertId.
 app.post("/newmessage", async (req, res) => {
+    console.log(req.cookies)
     const user = SESSIONS.get(req.cookies.sessionId);
     let userAuth = await getUserByEmail(user);
-    if (userAuth === null) {
+    if (userAuth === undefined) {
         return res.status(401).send("Unauthorized");
     } else {
         const newResponse = await chat(userAuth.id, req.body.prompt);
@@ -118,20 +117,13 @@ app.post("/newmessage", async (req, res) => {
 });
 
 app.post("/savemessage", async (req, res) => {
-    console.log('Request body:', req.body); // Debug log
     try {
-        console.log('Request body:', req.body); // Debug log
-        // Check if session exists
-        console.log('Session ID:', req.cookies.sessionId);
         const user = SESSIONS.get(req.cookies.sessionId);
         if (!user) {
-            console.log('No session found:', req.cookies);
             return res.status(401).send("No session found");
         }
 
-        // Get user data
         const userAuth = await getUserByEmail(user);
-        console.log('User auth data:', userAuth); // Debug log
 
         if (!userAuth) {
             return res.status(401).send("User not found");

@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import PropTypes from 'prop-types';
 
-export default function SideMenu({ getMessage, setChatIndex, messageList, setMessageList, setLookingOldChat }) {
-    const [isInitialLoad, setIsInitialLoad] = useState(true);
+export default function SideMenu({ getMessage, setChatIndex, messageList, setMessageList, setLookingOldChat, setIsInitialLoad, isInitialLoad }) {
     const [menuCollapse, setMenuCollapse] = useState(false);
 
     useEffect(() => {
@@ -102,6 +101,8 @@ SideMenu.propTypes = {
     // Function to update chat index
     setChatIndex: PropTypes.func.isRequired,
     setLookingOldChat: PropTypes.func.isRequired,
+    setIsInitialLoad: PropTypes.func.isRequired,
+    isInitialLoad: PropTypes.bool.isRequired,
     // Array of message objects
     messageList: PropTypes.arrayOf(
         PropTypes.shape({

@@ -8,7 +8,7 @@ const FormattedText = ({ text }) => (
   </pre>
 );
 
-export default function ChatInput({ getMessage, setLoading, setSendMessages, chatIndex, setChatIndex, messageList }) {
+export default function ChatInput({ getMessage, setLoading, setSendMessages, chatIndex, setChatIndex, messageList, setIsInitialLoad }) {
   const [message, setMessage] = useState("");
   const [isEmpty, setIsEmpty] = useState(false);
 
@@ -54,6 +54,7 @@ export default function ChatInput({ getMessage, setLoading, setSendMessages, cha
           }, { withCredentials: true })
           .then((response) => {
             console.log("Message saved successfully", response.data);
+            setIsInitialLoad(true);
           })
           .catch((error) => {
             console.error("Error saving message", error);
@@ -109,6 +110,7 @@ export default function ChatInput({ getMessage, setLoading, setSendMessages, cha
 }
 
 ChatInput.propTypes = {
+  setIsInitialLoad: PropTypes.func.isRequired,
   getMessage: PropTypes.func.isRequired,
   setLoading: PropTypes.func.isRequired,
   messageList: PropTypes.array.isRequired,

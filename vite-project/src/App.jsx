@@ -24,6 +24,7 @@ export default function App() {
 }
 
 const MainPage = () => {
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [lookingOldChat, setLookingOldChat] = useState(false);
   const [messageList, setMessageList] = useState([]);
   const [messages, setMessages] = useState([]);
@@ -81,6 +82,8 @@ const MainPage = () => {
   return (
     <div className="flex">
       <SideMenu
+        isInitialLoad={isInitialLoad}
+        setIsInitialLoad={setIsInitialLoad}
         lookingOldChat={lookingOldChat}
         setLookingOldChat={setLookingOldChat}
         messageList={messageList}
@@ -95,6 +98,8 @@ const MainPage = () => {
           loading={loading}
           />
         <ChatInput
+          isInitialLoad={isInitialLoad}
+          setIsInitialLoad={setIsInitialLoad}
           messageList={messageList}
           setChatIndex={setChatIndex}
           chatIndex={chatIndex}
